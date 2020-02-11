@@ -3,6 +3,9 @@
  * @brief State machines used in elevator.
  */
 
+#ifndef FSM_H
+#define FSM_H
+
 
 /**
 * @brief States for the elevator
@@ -44,4 +47,6 @@ static int motor_dir;
 * @brief A state machine for initializing the elevator.
 */
 void fsm_init();
+
+#endif
 
