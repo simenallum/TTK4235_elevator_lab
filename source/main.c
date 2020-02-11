@@ -9,6 +9,9 @@ int main(){
         exit(1);
     }
 
+    fsm_init();
+
+    /**
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
 
@@ -27,4 +30,5 @@ int main(){
             hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
         }
     }
+    */
 }
