@@ -76,5 +76,23 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type);
  */
 void fsm_ev_timeout();
 
+/**
+ * @brief a state machine for the event that the elevator reaches a floor.
+ * 
+ * @param floor that the elevator stops at.
+ */
+void fsm_ev_reach_floor(int floor);
+
+/**
+ * @brief a state machine for the event that the door is being obstructed.
+ */
+void fsm_ev_obstruction();
+
+/**
+* @brief a state machine for the event stop button is being pressed.
+*/
+void fsm_ev_stopButton_pressed();
+
+
 #endif
 
