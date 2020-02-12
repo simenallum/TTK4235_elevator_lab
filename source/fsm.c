@@ -73,7 +73,7 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 					}
 				}
 				for (int i = prev_floor; i >= 0; --i){
-					if (down_vec[i] = 1){
+					if (down_vec[i] == 1){
 						next_floor = i;
 						break; 
 					}
