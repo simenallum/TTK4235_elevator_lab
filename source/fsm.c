@@ -86,3 +86,8 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 		break;
 	}
 }
+
+
+void fsm_ev_timeout(){
+	
+}

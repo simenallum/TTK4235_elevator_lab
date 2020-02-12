@@ -71,5 +71,10 @@ void fsm_init();
  */
 void fsm_ev_set_queue(int floor, HardwareOrder order_type);
 
+/**
+ * @brief a state machine to be called when timer is up.
+ */
+void fsm_ev_timeout();
+
 #endif
 
