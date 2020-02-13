@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "hardware.h"
 #include "fsm.h"
+#include "timer.h"
 
 static void clear_all_order_lights(){
     HardwareOrder order_types[3] = {
@@ -30,6 +31,7 @@ int main(){
 
     while(1){
         if(hardware_read_stop_signal()){
+            clear_all_order_lights();
             fsm_ev_stopButton_pressed();
         }
 
