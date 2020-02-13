@@ -43,18 +43,32 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 			if (floor > prev_floor ){
 				if (order_type == HARDWARE_ORDER_DOWN){
 					down_vec[floor] = 1;
+					hardware_command_order_light(floor, HARDWARE_ORDER_DOWN, 1);
 				}
 				else{
 					up_vec[floor] = 1;
+					if (order_type == HARDWARE_ORDER_UP){
+						hardware_command_order_light(floor, HARDWARE_ORDER_UP, 1);
+					}
+					else if(order_type == HARDWARE_ORDER_INSIDE){
+						hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 1);
+					}
 				}
 			}
 				
 			else if (floor < prev_floor){
 				if (order_type == HARDWARE_ORDER_UP){
 					up_vec[floor] = 1;
+					hardware_command_order_light(floor, HARDWARE_ORDER_UP, 1);
 				}
 				else{
 					down_vec[floor] = 1;
+					if (order_type == HARDWARE_ORDER_DOWN){
+						hardware_command_order_light(floor, HARDWARE_ORDER_UP, 1);
+					}
+					else if(order_type == HARDWARE_ORDER_INSIDE){
+						hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 1);
+					}
 				}
 			}
 
@@ -93,6 +107,12 @@ void fsm_ev_reach_floor(int floor){
 			up_vec[floor] = 0; //clearing queues. 
 			down_vec[floor] = 0;
 			for (int i = HARDWARE_ORDER_UP; i <= HARDWARE_ORDER_DOWN; i++){
+				if ((floor == 0) && (i == HARDWARE_ORDER_DOWN)){
+					continue;
+				}
+				if ((floor == 3) && (i == HARDWARE_ORDER_UP)){
+					continue;
+				}
 				hardware_command_order_light(floor, i, 0); //turn off order lights.
 			}
 			set_next_floor(prev_motor_dir, prev_floor, next_floor, up_vec, down_vec); //sets next floor
@@ -160,14 +180,23 @@ void fsm_ev_request(){
 	switch(current_state){
 			case STILL:
 				{
+					if (next_floor == -1){
+						hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+						prev_motor_dir = 0;
+						break;
+					}
+
 					if(prev_floor > next_floor){
 						hardware_command_movement(HARDWARE_MOVEMENT_UP);
+						prev_motor_dir = 1;
 					}
 					else if(prev_floor < next_floor){
 						hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
+						prev_motor_dir = -1;
 					}
 					
 					current_state = MOVING;
+					break;
 				}						
 			case DOOR_OPEN:
 			case MOVING:
