@@ -17,7 +17,7 @@ void timer_start(void) {
 
 
 int check_timeout(void) {
-    if (time(NULL) - seconds > 3) {
+    if (time(NULL) - seconds >= 3) {
         return 1;
     }
     return 0;
