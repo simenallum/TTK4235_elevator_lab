@@ -9,8 +9,14 @@ void fsm_init(){
 	if (hardware_read_floor_sensor(0)){
 		current_state = STILL;
 		prev_floor = 0;
+        break;
 	}
-
+    else if (hardware_read_floor_sensor(3)){
+        current_state = STILL;
+        prev_floor = 3;
+        break;
+    }
+    
 	hardware_command_movement(HARDWARE_MOVEMENT_UP);
 	while(1){
 		int current_floor = 0;
@@ -101,6 +107,7 @@ void fsm_ev_reach_floor(int floor){
 	}
 }
 
+
 void fsm_ev_obstruction(){
 	switch(current_state){
 		case DOOR_OPEN:
@@ -115,6 +122,7 @@ void fsm_ev_obstruction(){
 		break;
 	}
 }
+
 
 void fsm_ev_stopButton_pressed(){
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
@@ -147,3 +155,7 @@ void fsm_ev_stopButton_pressed(){
 		current_state = STILL;
 	}
 }
+
+
+
+
