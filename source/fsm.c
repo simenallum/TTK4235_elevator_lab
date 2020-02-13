@@ -9,12 +9,12 @@ void fsm_init(){
 	if (hardware_read_floor_sensor(0)){
 		current_state = STILL;
 		prev_floor = 0;
-        break;
+        return;
 	}
     else if (hardware_read_floor_sensor(3)){
         current_state = STILL;
         prev_floor = 3;
-        break;
+        return;
     }
     
 	hardware_command_movement(HARDWARE_MOVEMENT_UP);
