@@ -156,6 +156,27 @@ void fsm_ev_stopButton_pressed(){
 	}
 }
 
+void fsm_ev_request(){
+	switch(current_state){
+			case STILL:
+				{
+					if(prev_floor > next_floor){
+						hardware_command_movement(HARDWARE_MOVEMENT_UP);
+					}
+					else if(prev_floor < next_floor){
+						hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
+					}
+					
+					current_state = MOVING;
+				}						
+			case DOOR_OPEN:
+			case MOVING:
+			case EMERGENCY_BETWEEN_FLOOR:
+			case EMERGENCY_AT_FLOOR:
+				break;
+	}
+}
+
 
 
 

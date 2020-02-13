@@ -93,6 +93,11 @@ void fsm_ev_obstruction();
 */
 void fsm_ev_stopButton_pressed();
 
+/**
+* @brief a state machine for handling requests.
+*/
+void fsm_ev_request();
+
 
 #endif
 
