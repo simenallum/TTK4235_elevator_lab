@@ -5,7 +5,17 @@
 #include "orders_and_commands.h"
 #include "timer.h"
 
+	STATES current_state;
+	int prev_motor_dir;
+	int prev_floor;
+	int next_floor;
+	int up_vec[] = {0,0,0,0};
+	int down_vec[] = {0,0,0,0};
+	int motor_dir;
+
 void fsm_init(){
+
+
 	if (hardware_read_floor_sensor(0)){
 		current_state = STILL;
 		prev_floor = 0;
