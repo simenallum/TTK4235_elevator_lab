@@ -9,7 +9,7 @@
 #include "timer.h"
 #include "time.h"
 
-
+static time_t seconds = 0;
 
 void timer_start(void) {
     seconds = time(NULL);

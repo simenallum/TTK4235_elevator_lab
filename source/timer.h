@@ -17,10 +17,10 @@
 */
 
 
-/**
- * @brief Variable for time door opened
-*/
-static time_t seconds;
+// /**
+//  * @brief Variable for time door opened
+// */
+// static time_t seconds;
 
 /**
  * @brief Function that starts time
