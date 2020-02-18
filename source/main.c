@@ -54,6 +54,7 @@ int main(){
             if(hardware_read_floor_sensor(i)){
                 if (i != prev_floor){
                     hardware_command_floor_indicator_on(i);
+                    prev_floor = i; // Oppdaterer prev_floor når den kjører forbi en etasje.
                 }
                 if(i == next_floor){
                 	fsm_ev_reach_floor(i);
