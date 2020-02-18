@@ -48,29 +48,23 @@ int main(){
             clear_all_order_lights();
             fsm_ev_stopButton_pressed();
         }
-    
 
-        /**
+   
         for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; ++i){
             if(hardware_read_floor_sensor(i)){
                 if (i != prev_floor){
                     hardware_command_floor_indicator_on(i);
                 }
-                fsm_ev_reach_floor(i);
+                if(i == next_floor){
+                	fsm_ev_reach_floor(i);
+                }
             }
         }
-        */
+ 
+  
 
         for (int floor = 0; floor < 4; floor++){
             for (int i = HARDWARE_ORDER_UP; i <= HARDWARE_ORDER_DOWN; i++){
-                /**
-                if ((floor == 0) && (i == HARDWARE_ORDER_DOWN)){
-                    continue;
-                }
-                else if ((floor == 3) && (i == HARDWARE_ORDER_UP)){
-                    continue;
-                }
-                */
                 if(hardware_read_order(floor, i)){
                     fsm_ev_set_queue(floor, i);
                 }
@@ -85,6 +79,6 @@ int main(){
             fsm_ev_obstruction();
         }
         
-        // fsm_ev_request();
+        fsm_ev_request();
     }
 }

@@ -11,12 +11,13 @@
 
 static time_t seconds = 0;
 
-void timer_start(void) {
+void timer_start() {
+	printf("Timer is started\n");
     seconds = time(NULL);
 }
 
 
-int check_timeout(void) {
+int check_timeout() {
     if (time(NULL) - seconds >= 3) {
         return 1;
     }

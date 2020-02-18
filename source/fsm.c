@@ -44,6 +44,7 @@ void fsm_init(){
 		}	
 	}
 	current_state = STILL;
+	next_floor = -1;
 }
 
 void fsm_ev_set_queue(int floor, HardwareOrder order_type){
@@ -100,6 +101,7 @@ void fsm_ev_timeout(){
 	switch(current_state){
 		case DOOR_OPEN:
 		{
+			printf("timer time_out\n");
 			hardware_command_door_open(0); // closes door.
 			current_state = STILL;
 		}
@@ -118,19 +120,15 @@ void fsm_ev_reach_floor(int floor){
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP); //stoping the elevator
 			prev_floor = floor;
 			hardware_command_door_open(1); //Opens door (lights door-light)
+			timer_start();
 			up_vec[floor] = 0; //clearing queues. 
 			down_vec[floor] = 0;
 			for (int i = HARDWARE_ORDER_UP; i <= HARDWARE_ORDER_DOWN; i++){
-				if ((floor == 0) && (i == HARDWARE_ORDER_DOWN)){
-					continue;
-				}
-				if ((floor == 3) && (i == HARDWARE_ORDER_UP)){
-					continue;
-				}
 				hardware_command_order_light(floor, i, 0); //turn off order lights.
 			}
 			set_next_floor(prev_motor_dir, prev_floor, &next_floor, up_vec, down_vec); //sets next floor
 			current_state = DOOR_OPEN;
+			break;
 
 		}
 		case STILL:
@@ -200,11 +198,11 @@ void fsm_ev_request(){
 						break;
 					}
 
-					if(prev_floor > next_floor){
+					if(next_floor > prev_floor){
 						hardware_command_movement(HARDWARE_MOVEMENT_UP);
 						prev_motor_dir = 1;
 					}
-					else if(prev_floor < next_floor){
+					else if(next_floor < prev_floor){
 						hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 						prev_motor_dir = -1;
 					}

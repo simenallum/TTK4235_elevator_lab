@@ -25,13 +25,13 @@
 /**
  * @brief Function that starts time
 */
-void timer_start(void);
+void timer_start();
 
 
 /**
  * @brief Checks if doors have been opened for 3 seconds
 */
-int check_timeout(void);
+int check_timeout();
 
 
 
