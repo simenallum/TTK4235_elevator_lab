@@ -27,7 +27,7 @@ void set_next_floor(int prev_motor_dir, int prev_floor, int* next_floor, int up_
 						return;
 					}
 				}
-				for (int i = 4; i >= 0; --i){
+				for (int i = 3; i >= 0; --i){
 					if (down_vec[i] == 1){
 						*next_floor = i;
 						return; 
