@@ -200,7 +200,7 @@ void fsm_ev_request(){
 					if (next_floor == -1){
 						hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 						prev_motor_dir = 0;
-						break;
+						return;
 					}
 
 					if(next_floor > prev_floor){
@@ -213,7 +213,7 @@ void fsm_ev_request(){
 					}
 					
 					current_state = MOVING;
-					break;
+					return;
 				}						
 			case DOOR_OPEN:
 			case MOVING:
