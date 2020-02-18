@@ -19,11 +19,15 @@ void fsm_init(){
 	if (hardware_read_floor_sensor(0)){
 		current_state = STILL;
 		prev_floor = 0;
+		next_floor = -1;
+		hardware_command_floor_indicator_on(0);
         return;
 	}
     else if (hardware_read_floor_sensor(3)){
         current_state = STILL;
         prev_floor = 3;
+        next_floor = -1;
+        hardware_command_floor_indicator_on(3);
         return;	
     }
     
@@ -55,7 +59,7 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 		case STILL:
 		{
 			// for setting queue.
-			if (floor >= prev_floor ){
+			if (floor > prev_floor ){
 				if (order_type == HARDWARE_ORDER_DOWN){
 					down_vec[floor] = 1;
 					hardware_command_order_light(floor, HARDWARE_ORDER_DOWN, 1);
@@ -75,18 +79,18 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 				if (order_type == HARDWARE_ORDER_UP){
 					up_vec[floor] = 1;
 					hardware_command_order_light(floor, HARDWARE_ORDER_UP, 1);
+					
 				}
 				else{
 					down_vec[floor] = 1;
 					if (order_type == HARDWARE_ORDER_DOWN){
-						hardware_command_order_light(floor, HARDWARE_ORDER_UP, 1);
+						hardware_command_order_light(floor, HARDWARE_ORDER_DOWN, 1);
 					}
 					else if(order_type == HARDWARE_ORDER_INSIDE){
 						hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 1);
 					}
 				}
 			}
-
     		set_next_floor(prev_motor_dir, prev_floor, &next_floor, up_vec, down_vec);
 			break;
 		}
@@ -160,6 +164,7 @@ void fsm_ev_stopButton_pressed(){
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 	hardware_command_stop_light(1);
 	clear_queue(up_vec, down_vec);
+	next_floor = -1;
 
 	while(hardware_read_stop_signal()){
 		switch(current_state){

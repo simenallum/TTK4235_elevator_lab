@@ -80,5 +80,7 @@ int main(){
         }
         
         fsm_ev_request();
+
+       // printf("next_floor: %d\n", next_floor);
     }
 }
