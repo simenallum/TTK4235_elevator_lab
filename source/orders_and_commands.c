@@ -4,18 +4,18 @@
 
 void set_next_floor(int prev_motor_dir, int prev_floor, int* next_floor, int up_vec[], int down_vec[]){
     // for setting the next floor variable.
-			if (prev_motor_dir = 1){
+			if (prev_motor_dir == 1){
 				for (int i = prev_floor; i < 4; ++i){
 					if (up_vec[i] == 1){
-						next_floor = i;
+						*next_floor = i;
 						return;
 					}
 				}
 			}
-			else if (prev_motor_dir = -1){
+			else if (prev_motor_dir == -1){
 				for (int i = prev_floor; i >= 0; --i){
 					if (down_vec[i] == 1){
-						next_floor = i;
+						*next_floor = i;
 						return;
 					}
 				}
@@ -23,18 +23,18 @@ void set_next_floor(int prev_motor_dir, int prev_floor, int* next_floor, int up_
 			else{
 				for (int i = prev_floor; i < 4; ++i){
 					if (up_vec[i] == 1){
-						next_floor = i;
+						*next_floor = i;
 						return;
 					}
 				}
 				for (int i = prev_floor; i >= 0; --i){
 					if (down_vec[i] == 1){
-						next_floor = i;
+						*next_floor = i;
 						return; 
 					}
 				}		
 			}
-            next_floor = -1;
+            *next_floor = -1;
 }
 
 void clear_queue(int up_vec[], int down_vec[]){

@@ -24,20 +24,24 @@ void fsm_init(){
     else if (hardware_read_floor_sensor(3)){
         current_state = STILL;
         prev_floor = 3;
-        return;
+        return;	
     }
     
 	hardware_command_movement(HARDWARE_MOVEMENT_UP);
+	int current_floor = 0;
 	while(1){
-		int current_floor = 0;
-		for (int i = 1; i < HARDWARE_NUMBER_OF_FLOORS; i++){
+		for (int i = 1; i < 4; i++){
 			if (hardware_read_floor_sensor(i)){
+				hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 				current_floor = i;
+				hardware_command_floor_indicator_on(i);
 				break;
 			}
 		}
 		prev_floor = current_floor;
-		break;
+		if (current_floor != 0){
+			break;
+		}	
 	}
 	current_state = STILL;
 }
@@ -50,7 +54,7 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 		case STILL:
 		{
 			// for setting queue.
-			if (floor > prev_floor ){
+			if (floor >= prev_floor ){
 				if (order_type == HARDWARE_ORDER_DOWN){
 					down_vec[floor] = 1;
 					hardware_command_order_light(floor, HARDWARE_ORDER_DOWN, 1);
@@ -82,7 +86,7 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 				}
 			}
 
-    		set_next_floor(prev_motor_dir, prev_floor, next_floor, up_vec, down_vec);
+    		set_next_floor(prev_motor_dir, prev_floor, &next_floor, up_vec, down_vec);
 			break;
 		}
 		case EMERGENCY_AT_FLOOR:
@@ -125,7 +129,7 @@ void fsm_ev_reach_floor(int floor){
 				}
 				hardware_command_order_light(floor, i, 0); //turn off order lights.
 			}
-			set_next_floor(prev_motor_dir, prev_floor, next_floor, up_vec, down_vec); //sets next floor
+			set_next_floor(prev_motor_dir, prev_floor, &next_floor, up_vec, down_vec); //sets next floor
 			current_state = DOOR_OPEN;
 
 		}
