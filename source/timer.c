@@ -12,7 +12,6 @@
 static time_t seconds = 0;
 
 void timer_start() {
-	printf("Timer is started\n");
     seconds = time(NULL);
 }
 
