@@ -154,19 +154,6 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 				}
 			}
 
-			printf(">Up vec: [");
-			for (int i = 0; i < 4; i++){
-				printf("%d", up_vec[i]); 
-				printf(" ");
-			}
-			printf("]\n");
-			printf("Down VEc: [");
-			for (int i = 0; i < 4; i++){
-				printf("%d", down_vec[i]); 
-				printf(" ");
-			}
-			printf("]\n");
-
     		set_next_floor(motor_dir, prev_floor, &next_floor, up_vec, down_vec);
 			break;
 		}
@@ -181,7 +168,6 @@ void fsm_ev_timeout(){
 	switch(current_state){
 		case DOOR_OPEN:
 		{
-			printf("timer time_out\n");
 			hardware_command_door_open(0); // closes door.
 			current_state = STILL;
 			return; //Lagt til en endring her. Manglet return / brake.
@@ -200,7 +186,6 @@ void fsm_ev_reach_floor(int floor){
 		case MOVING:
 		{
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP); //stoping the elevator
-			prev_floor = floor;
 			hardware_command_door_open(1); //Opens door (lights door-light)
 			timer_start();
 			up_vec[floor] = 0; //clearing queues. 
