@@ -82,9 +82,9 @@ int main(){
         
         fsm_ev_request();
 
-        printf("motor_dir: %d\n", motor_dir);
-        printf("next_floor: %d\n", next_floor);
-        printf("prev_floor: %d\n", prev_floor);
-        printf("Current_state: %d\n", current_state);
+        //printf("motor_dir: %d\n", motor_dir);
+        //printf("next_floor: %d\n", next_floor);
+        //printf("prev_floor: %d\n", prev_floor);
+        //printf("Current_state: %d\n", current_state);
     }
 }
