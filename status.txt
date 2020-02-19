@@ -23,3 +23,9 @@ Endret tirsdag kveld:
 
 Tanker til onsdag:
 	- Burde ikke sette prev_motor_dir = 0 i fsm_ev_request(). Heisen husker da ikke hvor den er.
+
+
+Fikset på lab onsdag:
+	- Heisen snur retning i endepunktene.
+	- søker gjennom begge vektorene hver gang.
+	- Fikset for fsm_set_queue etter en stop.
