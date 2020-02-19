@@ -133,9 +133,11 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 				else if(order_type == HARDWARE_ORDER_INSIDE){
 					if(motor_dir == 1){
 						down_vec[floor] = 1;
+						hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 1);
 					}
 					else if(motor_dir == -1){
 						up_vec[floor] = 1;
+						hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 1);
 					}
 				}
 			}
