@@ -26,9 +26,9 @@ typedef enum {
 extern STATES current_state;
 
 /**
- * @brief Containing previous motor direction.
+ * @brief Containing motor direction.
  */
-extern int prev_motor_dir;
+extern int motor_dir;
 
 
 /**
@@ -51,11 +51,6 @@ extern int up_vec[];
 * @brief Next floorAn array for containing down orders.
 */
 extern int down_vec[];
-
-/**
-* @brief variable for containing motor direction.
-*/
-extern int motor_dir;
 
 /**
 * @brief A state machine for initializing the elevator.

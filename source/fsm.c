@@ -6,7 +6,7 @@
 #include "timer.h"
 
 	STATES current_state;
-	int prev_motor_dir;
+	int motor_dir;
 	int prev_floor;
 	int next_floor;
 	int up_vec[] = {0,0,0,0};
@@ -20,7 +20,7 @@ void fsm_init(){
 		current_state = STILL;
 		prev_floor = 0;
 		next_floor = -1;
-		prev_motor_dir = 0;
+		motor_dir = 1;
 		hardware_command_floor_indicator_on(0);
         return;
 	}
@@ -28,7 +28,7 @@ void fsm_init(){
         current_state = STILL;
         prev_floor = 3;
         next_floor = -1;
-		prev_motor_dir = 0;
+		motor_dir = 1;
         hardware_command_floor_indicator_on(3);
         return;	
     }
@@ -51,7 +51,7 @@ void fsm_init(){
 	}
 	current_state = STILL;
 	next_floor = -1;
-	prev_motor_dir = 0;
+	motor_dir = 1;
 }
 
 void fsm_ev_set_queue(int floor, HardwareOrder order_type){
@@ -110,7 +110,50 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 					}
 				}
 			}
-    		set_next_floor(prev_motor_dir, prev_floor, &next_floor, up_vec, down_vec);
+
+			else if(floor == prev_floor){
+				if(order_type == HARDWARE_ORDER_UP){
+					if ((floor == 0) && (order_type == HARDWARE_ORDER_UP)){
+						down_vec[0] = 1;
+						hardware_command_order_light(0, HARDWARE_ORDER_UP, 1);
+					}
+					else{
+						up_vec[floor] = 1;
+					}
+				}
+				else if(order_type == HARDWARE_ORDER_DOWN){
+					if ((floor == 3) && (order_type == HARDWARE_ORDER_DOWN)){
+						hardware_command_order_light(3, HARDWARE_ORDER_DOWN, 1);
+						up_vec[3] = 1;
+					}
+					else{
+						down_vec[floor] = 1;
+					}
+				}
+				else if(order_type == HARDWARE_ORDER_INSIDE){
+					if(motor_dir == 1){
+						down_vec[floor] = 1;
+					}
+					else if(motor_dir == -1){
+						up_vec[floor] = 1;
+					}
+				}
+			}
+
+			printf(">Up vec: [");
+			for (int i = 0; i < 4; i++){
+				printf("%d", up_vec[i]); 
+				printf(" ");
+			}
+			printf("]\n");
+			printf("Down VEc: [");
+			for (int i = 0; i < 4; i++){
+				printf("%d", down_vec[i]); 
+				printf(" ");
+			}
+			printf("]\n");
+
+    		set_next_floor(motor_dir, prev_floor, &next_floor, up_vec, down_vec);
 			break;
 		}
 		case EMERGENCY_AT_FLOOR:
@@ -151,7 +194,7 @@ void fsm_ev_reach_floor(int floor){
 			for (int i = HARDWARE_ORDER_UP; i <= HARDWARE_ORDER_DOWN; i++){
 				hardware_command_order_light(floor, i, 0); //turn off order lights.
 			}
-			set_next_floor(prev_motor_dir, prev_floor, &next_floor, up_vec, down_vec); //sets next floor
+			set_next_floor(motor_dir, prev_floor, &next_floor, up_vec, down_vec); //sets next floor
 			current_state = DOOR_OPEN;
 			break;
 
@@ -219,26 +262,26 @@ void fsm_ev_request(){
 				{
 					if (next_floor == -1){
 						hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-						// prev_motor_dir = 0; // denne vil være dumt å ha med da den setter prev_motor_dir = 0 rett etter et stop.
+						// motor_dir = 0; // denne vil være dumt å ha med da den setter motor_dir = 0 rett etter et stop.
 						return;
 					}
 
 					if(next_floor > prev_floor){
 						hardware_command_movement(HARDWARE_MOVEMENT_UP);
-						prev_motor_dir = 1;
+						motor_dir = 1;
 					}
 					else if(next_floor < prev_floor){
 						hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-						prev_motor_dir = -1;
+						motor_dir = -1;
 					}
 					else if(next_floor == prev_floor){ //denne vil bare kalles etter en eventuell stop mellom to etasjer.
-						if (prev_motor_dir == 1){
+						if (motor_dir == 1){
 							hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-							prev_motor_dir = -1;
+							motor_dir = -1;
 						}
-						else if (prev_motor_dir == -1){
+						else if (motor_dir == -1){
 							hardware_command_movement(HARDWARE_MOVEMENT_UP);
-							prev_motor_dir = 1;
+							motor_dir = 1;
 						}
 					}
 					
