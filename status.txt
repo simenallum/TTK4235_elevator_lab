@@ -10,9 +10,10 @@ Status:
 [x] Ting blir kranglete etter stop.
 [x] bestillinger fungerer ikke mens døren er åpen. Heisen kjører ikke med en gang døren er lukket.
 
-[] En bestlling som kommer i samme retning som heisen kjører etter heisen har kjørt forbi en etasjen fører til at endestoppsbryterene "kicker" inn da reach_floor "leter"
+[x] Q1 : En bestlling som kommer i samme retning som heisen kjører etter heisen har kjørt forbi en etasjen fører til at endestoppsbryterene "kicker" inn da reach_floor "leter"
 etter feil etasje.
 
+[] Timer starter to ganger når du får en bestilling i en etasje du står i. 
 
 Endret tirsdag kveld:
 	- Flyttet posisjonen til STILL-casen i reach_floor();
