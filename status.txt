@@ -1,14 +1,17 @@
 Status:
 
-[] Fjerde etasje fungerer ikke. verken lys eller bestillinger.
-[] Første blir ikke prioritert. selv uten noen bestillinger.
-	[] Køsystem fungerer ikke optimalt
+[x] Fjerde etasje fungerer ikke. verken lys eller bestillinger.
+[x] Første blir ikke prioritert. selv uten noen bestillinger.
+	[x] Køsystem fungerer ikke optimalt
 [x] Døren vil aldri åpnes. Mistenker at den aldri kalles timer? 
 	[x] Obstruksjon fungerer da heller ikke. Dør aldri åpen.
 
-[] Opp 2 lyser når ned 2 blit klikket.
-[] Ting blir kranglete etter stop.
-[] bestillinger fungerer ikke mens døren er åpen. Heisen kjører ikke med en gang døren er lukket.
+[x] Opp 2 lyser når ned 2 blit klikket.
+[x] Ting blir kranglete etter stop.
+[x] bestillinger fungerer ikke mens døren er åpen. Heisen kjører ikke med en gang døren er lukket.
+
+[] En bestlling som kommer i samme retning som heisen kjører etter heisen har kjørt forbi en etasjen fører til at endestoppsbryterene "kicker" inn da reach_floor "leter"
+etter feil etasje.
 
 
 Endret tirsdag kveld:
