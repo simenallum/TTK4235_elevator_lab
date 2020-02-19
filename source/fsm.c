@@ -119,6 +119,12 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 					}
 					else{
 						up_vec[floor] = 1;
+						if (order_type == HARDWARE_ORDER_UP){
+							hardware_command_order_light(floor, HARDWARE_ORDER_UP, 1);
+						}	
+						else if(order_type == HARDWARE_ORDER_INSIDE){
+							hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 1);
+						}
 					}
 				}
 				else if(order_type == HARDWARE_ORDER_DOWN){
@@ -128,6 +134,12 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 					}
 					else{
 						down_vec[floor] = 1;
+						if (order_type == HARDWARE_ORDER_DOWN){
+							hardware_command_order_light(floor, HARDWARE_ORDER_DOWN, 1);
+						}
+						else if(order_type == HARDWARE_ORDER_INSIDE){
+							hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 1);
+						}
 					}
 				}
 				else if(order_type == HARDWARE_ORDER_INSIDE){
