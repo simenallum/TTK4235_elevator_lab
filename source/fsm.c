@@ -230,9 +230,22 @@ void fsm_ev_stopButton_pressed(){
 
 	while(hardware_read_stop_signal()){
 		switch(current_state){
+			case STILL:
+			{
+				for(int i = 0; i < 4; i++){
+					if(hardware_read_floor_sensor(i)){
+						current_state = EMERGENCY_AT_FLOOR;
+						timer_start();
+						break; // Breaker denne for-loopen og switchen?
+					}
+
+				}
+				current_state = EMERGENCY_BETWEEN_FLOOR; 
+				break;
+
+			}
 			case EMERGENCY_AT_FLOOR:
 			case DOOR_OPEN:
-			case STILL:
 			{
 				current_state = EMERGENCY_AT_FLOOR;
 				timer_start();

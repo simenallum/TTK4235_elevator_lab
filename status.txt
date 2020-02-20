@@ -15,6 +15,9 @@ etter feil etasje.
 
 [] Timer starter to ganger når du får en bestilling i en etasje du står i. 
 
+Test-caser:
+	- Stopp mellom to etasjer. Klikk stopp igjen med en gang uten nye bestillinger. Sjekk om døren åpner seg.
+
 Endret tirsdag kveld:
 	- Flyttet posisjonen til STILL-casen i reach_floor();
 	- Lagt til return OPEN_DOOR - casen i fsm_ev_timeout();
