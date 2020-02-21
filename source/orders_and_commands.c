@@ -51,7 +51,6 @@ void set_next_floor(int motor_dir, int prev_floor, int* next_floor, int up_vec[]
 					}
 				}
 			}
-				
             *next_floor = -1;
 }
 

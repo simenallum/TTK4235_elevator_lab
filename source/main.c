@@ -43,7 +43,7 @@ int main(){
     fsm_init();
     clear_all_order_lights();
 
-    while(1){
+    while(1){    
         if(hardware_read_stop_signal()){
             clear_all_order_lights();
             fsm_ev_stopButton_pressed();
