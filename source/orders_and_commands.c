@@ -56,7 +56,7 @@ void set_next_floor(int motor_dir, int prev_floor, int* next_floor, int up_vec[]
 }
 
 void clear_queue(int up_vec[], int down_vec[]){
-	for (int i = BOTTOM_FLOOR; i < TOP_FLOOR; i++){
+	for (int i = BOTTOM_FLOOR; i <= TOP_FLOOR; i++){
 		up_vec[i] = 0;
 		down_vec[i] = 0;
 	}
