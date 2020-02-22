@@ -57,8 +57,11 @@ void fsm_init(){
 void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 
 	switch(current_state){
-		case MOVING:
 		case DOOR_OPEN:
+		{
+			if(prev_floor == floor){return;}
+		}
+		case MOVING:
 		case STILL:
 		{
 			hardware_command_order_light(floor, order_type, 1);
@@ -133,7 +136,6 @@ void fsm_ev_timeout(){
 	switch(current_state){
 		case DOOR_OPEN:
 		{
-			printf("timer out\n");
 			hardware_command_door_open(0); // closes door.
 			current_state = STILL;
 			break; //Lagt til en endring her. Manglet brake.
@@ -150,7 +152,6 @@ void fsm_ev_reach_floor(int floor){
 	switch(current_state){
 		case MOVING:
 		{
-			printf("Reaches floor %d\n", floor);
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP); //stoping the elevator
 			hardware_command_door_open(1); //Opens door (lights door-light)
 			timer_start();
@@ -255,7 +256,7 @@ void fsm_ev_request(){
 						hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 						motor_dir = MOTOR_DOWN;
 					}
-					else if(next_floor == prev_floor){ 
+					else if(next_floor == prev_floor){
 						if (motor_dir == MOTOR_UP){
 							hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 							motor_dir = MOTOR_UP;

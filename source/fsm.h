@@ -15,6 +15,7 @@
 /**
 * @brief States for the elevator
 */
+
 typedef enum {
 	STILL = 0,
 	EMERGENCY_AT_FLOOR = 1,
@@ -22,7 +23,6 @@ typedef enum {
 	MOVING = 3,
 	DOOR_OPEN = 4
 } STATES;
-
 
 
 /**
