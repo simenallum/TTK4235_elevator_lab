@@ -15,8 +15,8 @@
  * @param prev_motor_dir previous motor direction.
  * @param prev_floor previous floor. 
  * @param next_floor to be set.
- * @param up_vec an array containing upp orders.
- * @param down_vec an array containing down orders.
+ * @param up_vec is the array containing upp orders.
+ * @param down_vec is the array containing down orders.
  */
 void set_next_floor( 
                     int prev_motor_dir, 

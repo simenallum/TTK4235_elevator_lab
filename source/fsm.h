@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief State machines used in elevator.
+ * @brief State machines called from elevator
  */
 
 #ifndef FSM_H
@@ -15,7 +15,6 @@
 /**
 * @brief States for the elevator
 */
-
 typedef enum {
 	STILL = 0,
 	EMERGENCY_AT_FLOOR = 1,
@@ -26,75 +25,79 @@ typedef enum {
 
 
 /**
-* @brief static variable for containing current state. 
+* @brief Extern variable for containing current state. 
 */
 extern STATES current_state;
 
 /**
- * @brief Containing motor direction.
+ * @brief Extern variable for containing motor direction.
  */
 extern int motor_dir;
 
 
 /**
-* @brief Previous floor.
+* @brief Extern variable for containing previous floor.
 */
 extern int prev_floor;
 
 
 /**
-* @brief Next floor
+* @brief Extern variable for containing next floor
 */
 extern int next_floor;
 
 /**
-* @brief An array for containing up orders.
+* @brief Extern array for containing up orders.
 */
 extern int up_vec[];
 
 /**
-* @brief Next floorAn array for containing down orders.
+* @brief Extern array for containing down orders.
 */
 extern int down_vec[];
 
 /**
-* @brief A state machine for initializing the elevator.
+* @brief A state machine for initializing the elevator. 
+*
+* Must be called once before the while-loop main(). 
 */
 void fsm_init();
 
 /**
- * @brief Sets next floor variable, and inserts the given floor @p floor into the queue. 
+ * @brief A state machine for setting queue and setting the next_floor variable.
+ * 
+ * Sets next floor variable, and inserts the given floor @p floor, with given @p order_type into the queue. 
  *
- * @param floor too be inserted to queue.
- *
- * @return 0 if all good. 1 if there was an error.
+ * @param floor to be inserted to queue.
+ * @param order_type of the order to be inserted to queue.
  */
 void fsm_ev_set_queue(int floor, HardwareOrder order_type);
 
 /**
- * @brief a state machine to be called when timer is up.
+ * @brief A state machine to be called when time is out.
+ * 
  */
 void fsm_ev_timeout();
 
 /**
- * @brief a state machine for the event that the elevator reaches a floor.
+ * @brief A state machine to be called when the elevator reaches a floor.
  * 
  * @param floor that the elevator stops at.
  */
 void fsm_ev_reach_floor(int floor);
 
 /**
- * @brief a state machine for the event that the door is being obstructed.
+ * @brief A state machine to be called when the door is being obstructed.
  */
 void fsm_ev_obstruction();
 
 /**
-* @brief a state machine for the event stop button is being pressed.
+* @brief aA state machine to be calles when the stopbutton is being pressed.
 */
 void fsm_ev_stopButton_pressed();
 
 /**
-* @brief a state machine for handling requests.
+* @brief A state machine to be called for setting motor direction.
 */
 void fsm_ev_request();
 
