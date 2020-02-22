@@ -31,6 +31,11 @@ typedef enum {
 } HardwareOrder;
 
 /**
+ * @brief Clears all order lights. 
+ */
+void clear_all_order_lights();
+
+/**
  * @brief Initializes the elevator control hardware.
  * Must be called once before other calls to the elevator
  * hardware driver.
