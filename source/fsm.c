@@ -9,34 +9,34 @@
 	int motor_dir;
 	int prev_floor;
 	int next_floor;
-	int up_vec[4] = {0,0,0,0};
-	int down_vec[4] = {0,0,0,0};
+	int up_vec[HARDWARE_NUMBER_OF_FLOORS] = {0,0,0,0};
+	int down_vec[HARDWARE_NUMBER_OF_FLOORS] = {0,0,0,0};
 	int motor_dir;
 
 void fsm_init(){
 
 
-	if (hardware_read_floor_sensor(0)){
+	if (hardware_read_floor_sensor(BOTTOM_FLOOR)){
 		current_state = STILL;
-		prev_floor = 0;
-		next_floor = -1;
-		motor_dir = 1;
-		hardware_command_floor_indicator_on(0);
+		prev_floor = BOTTOM_FLOOR;
+		next_floor = NO_ORDERS;
+		motor_dir = MOTOR_UP;
+		hardware_command_floor_indicator_on(BOTTOM_FLOOR);
         return;
 	}
-    else if (hardware_read_floor_sensor(3)){
+    else if (hardware_read_floor_sensor(TOP_FLOOR)){
         current_state = STILL;
-        prev_floor = 3;
-        next_floor = -1;
-		motor_dir = 1;
-        hardware_command_floor_indicator_on(3);
+        prev_floor = TOP_FLOOR;
+        next_floor = NO_ORDERS;
+		motor_dir = MOTOR_UP;
+        hardware_command_floor_indicator_on(TOP_FLOOR);
         return;	
     }
     
 	hardware_command_movement(HARDWARE_MOVEMENT_UP);
 	int current_floor = 0;
 	while(1){
-		for (int i = 1; i < 4; i++){
+		for (int i = BOTTOM_FLOOR+1; i < TOP_FLOOR; i++){
 			if (hardware_read_floor_sensor(i)){
 				hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 				current_floor = i;
@@ -50,8 +50,8 @@ void fsm_init(){
 		}	
 	}
 	current_state = STILL;
-	next_floor = -1;
-	motor_dir = 1;
+	next_floor = NO_ORDERS;
+	motor_dir = MOTOR_UP;
 }
 
 void fsm_ev_set_queue(int floor, HardwareOrder order_type){
@@ -65,8 +65,8 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 			// for setting queue.
 			if (floor > prev_floor ){
 				if (order_type == HARDWARE_ORDER_DOWN){
-					if ((floor == 3) && (order_type == HARDWARE_ORDER_DOWN)){
-						up_vec[3] = 1;
+					if ((floor == TOP_FLOOR) && (order_type == HARDWARE_ORDER_DOWN)){
+						up_vec[TOP_FLOOR] = 1;
 					}
 					else{
 						down_vec[floor] = 1;
@@ -79,8 +79,8 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 				
 			else if (floor < prev_floor){
 				if (order_type == HARDWARE_ORDER_UP){
-					if ((floor == 0) && (order_type == HARDWARE_ORDER_UP)){
-						down_vec[0] = 1;
+					if ((floor == BOTTOM_FLOOR) && (order_type == HARDWARE_ORDER_UP)){
+						down_vec[BOTTOM_FLOOR] = 1;
 					}
 					else{
 						up_vec[floor] = 1;
@@ -94,26 +94,26 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 
 			else if(floor == prev_floor){
 				if(order_type == HARDWARE_ORDER_UP){
-					if ((floor == 0) && (order_type == HARDWARE_ORDER_UP)){
-						down_vec[0] = 1;
+					if ((floor == BOTTOM_FLOOR) && (order_type == HARDWARE_ORDER_UP)){
+						down_vec[BOTTOM_FLOOR] = 1;
 					}
 					else{
 						up_vec[floor] = 1;
 					}
 				}
 				else if(order_type == HARDWARE_ORDER_DOWN){
-					if ((floor == 3) && (order_type == HARDWARE_ORDER_DOWN)){
-						up_vec[3] = 1;
+					if ((floor == TOP_FLOOR) && (order_type == HARDWARE_ORDER_DOWN)){
+						up_vec[TOP_FLOOR] = 1;
 					}
 					else{
 						down_vec[floor] = 1;
 					}
 				}
 				else if(order_type == HARDWARE_ORDER_INSIDE){
-					if(motor_dir == 1){
+					if(motor_dir == MOTOR_UP){
 						down_vec[floor] = 1;
 					}
-					else if(motor_dir == -1){
+					else if(motor_dir == MOTOR_DOWN){
 						up_vec[floor] = 1;
 					}
 				}
@@ -193,13 +193,13 @@ void fsm_ev_stopButton_pressed(){
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 	hardware_command_stop_light(1);
 	clear_queue(&up_vec[0], &down_vec[0]);
-	next_floor = -1;
+	next_floor = NO_ORDERS;
 
 	while(hardware_read_stop_signal()){
 		switch(current_state){
 			case STILL:
 			{
-				for(int i = 0; i < 4; i++){
+				for(int i = BOTTOM_FLOOR; i <= TOP_FLOOR; i++){
 					if(hardware_read_floor_sensor(i)){
 						current_state = EMERGENCY_AT_FLOOR;
 						timer_start();
@@ -241,7 +241,7 @@ void fsm_ev_request(){
 	switch(current_state){
 			case STILL:
 				{
-					if (next_floor == -1){
+					if (next_floor == NO_ORDERS){
 						hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 						current_state = STILL;
 						return;
@@ -249,20 +249,20 @@ void fsm_ev_request(){
 
 					if(next_floor > prev_floor){
 						hardware_command_movement(HARDWARE_MOVEMENT_UP);
-						motor_dir = 1;
+						motor_dir = MOTOR_UP;
 					}
 					else if(next_floor < prev_floor){
 						hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-						motor_dir = -1;
+						motor_dir = MOTOR_DOWN;
 					}
 					else if(next_floor == prev_floor){ 
-						if (motor_dir == 1){
+						if (motor_dir == MOTOR_UP){
 							hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-							motor_dir = -1;
+							motor_dir = MOTOR_UP;
 						}
-						else if (motor_dir == -1){
+						else if (motor_dir == MOTOR_DOWN){
 							hardware_command_movement(HARDWARE_MOVEMENT_UP);
-							motor_dir = 1;
+							motor_dir = MOTOR_UP;
 						}
 					}
 					

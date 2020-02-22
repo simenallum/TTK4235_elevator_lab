@@ -33,21 +33,21 @@ int main(){
         }
 
    
-        for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; ++i){
-            if(hardware_read_floor_sensor(i)){
-                if (i != prev_floor){
-                    hardware_command_floor_indicator_on(i);
-                    prev_floor = i; // Oppdaterer prev_floor når den kjører forbi en etasje.
+        for (int floor = BOTTOM_FLOOR; floor <= TOP_FLOOR; ++floor){
+            if(hardware_read_floor_sensor(floor)){
+                if (floor != prev_floor){
+                    hardware_command_floor_indicator_on(floor);
+                    prev_floor = floor; // Oppdaterer prev_floor når den kjører forbi en etasje.
                 }
-                if(i == next_floor){
-                	fsm_ev_reach_floor(i);
+                if(floor == next_floor){
+                	fsm_ev_reach_floor(floor);
                 }
             }
         }
  
   
 
-        for (int floor = 0; floor < 4; floor++){
+        for (int floor = BOTTOM_FLOOR; floor <= TOP_FLOOR; floor++){
             for (int i = HARDWARE_ORDER_UP; i <= HARDWARE_ORDER_DOWN; i++){
                 if(hardware_read_order(floor, i)){
                     fsm_ev_set_queue(floor, i);
@@ -64,10 +64,5 @@ int main(){
         }
         
         fsm_ev_request();
-
-        //printf("motor_dir: %d\n", motor_dir);
-        //printf("next_floor: %d\n", next_floor);
-        //printf("prev_floor: %d\n", prev_floor);
-        //printf("Current_state: %d\n", current_state);
     }
 }

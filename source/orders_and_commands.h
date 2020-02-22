@@ -3,6 +3,12 @@
  * @brief A library for containing queue functions.
  */ 
 
+#define NO_ORDERS -1
+#define MOTOR_DOWN -1
+#define MOTOR_UP 1
+#define TOP_FLOOR 3
+#define BOTTOM_FLOOR 0
+
 /**
  * @brief Sets the @p next_floor variable.
  * 
