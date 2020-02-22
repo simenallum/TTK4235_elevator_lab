@@ -203,10 +203,12 @@ void fsm_ev_stopButton_pressed(){
 					if(hardware_read_floor_sensor(i)){
 						current_state = EMERGENCY_AT_FLOOR;
 						timer_start();
-						break; // Breaker denne for-loopen og switchen?
+						hardware_command_door_open(1);
+						break;
 					}
 
 				}
+				if(current_state == EMERGENCY_AT_FLOOR){break;}
 				current_state = EMERGENCY_BETWEEN_FLOOR; 
 				break;
 
