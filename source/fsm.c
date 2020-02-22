@@ -9,8 +9,8 @@
 	int motor_dir;
 	int prev_floor;
 	int next_floor;
-	int up_vec[] = {0,0,0,0};
-	int down_vec[] = {0,0,0,0};
+	int up_vec[4] = {0,0,0,0};
+	int down_vec[4] = {0,0,0,0};
 	int motor_dir;
 
 void fsm_init(){
@@ -192,7 +192,7 @@ void fsm_ev_obstruction(){
 void fsm_ev_stopButton_pressed(){
 	hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 	hardware_command_stop_light(1);
-	clear_queue(up_vec, down_vec);
+	clear_queue(&up_vec[0], &down_vec[0]);
 	next_floor = -1;
 
 	while(hardware_read_stop_signal()){
