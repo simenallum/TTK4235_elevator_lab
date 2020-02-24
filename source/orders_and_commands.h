@@ -18,7 +18,7 @@
  * @param up_vec is the array containing upp orders.
  * @param down_vec is the array containing down orders.
  */
-void set_next_floor( 
+void oc_set_next_floor( 
                     int prev_motor_dir, 
                     int prev_floor, 
                     int* next_floor, 
@@ -32,4 +32,4 @@ void set_next_floor(
  * @param up_vec is the vector containing upp orders.
  * @param down_vec is the vector for containing down orders.
  */
-void clear_queue(int up_vec[], int down_vec[]);
+void oc_clear_queue(int up_vec[], int down_vec[]);

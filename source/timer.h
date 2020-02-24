@@ -29,7 +29,7 @@ void timer_start();
  * 
  * @return 1 if time is out. Otherwise it returns 0. 
 */
-int check_timeout();
+int timer_check_timeout();
 
 
 

@@ -55,7 +55,7 @@ int main(){
             }
         }
 
-        if(check_timeout()){
+        if(timer_check_timeout()){
             fsm_ev_timeout();
         }
 
