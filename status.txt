@@ -41,3 +41,5 @@ Sjekk opp tirsdag:
 	- Hvordan fungerer det med motor_motor dir i oc_set_next_floor() når den ikke blir tatt inn som en referanse?
 	Det ser ut som det er flaks at det fungerer, og at motor dir ikke blir satt utenfor funksjonen der, men heller blir
 	satt i requestcallet etterpå?
+
+	- Hva skjer i linje 212 i fsm.c ?? 
