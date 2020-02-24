@@ -36,3 +36,8 @@ Fikset på lab onsdag:
 	- Heisen snur retning i endepunktene.
 	- søker gjennom begge vektorene hver gang.
 	- Fikset for fsm_set_queue etter en stop.
+
+Sjekk opp tirsdag:
+	- Hvordan fungerer det med motor_motor dir i oc_set_next_floor() når den ikke blir tatt inn som en referanse?
+	Det ser ut som det er flaks at det fungerer, og at motor dir ikke blir satt utenfor funksjonen der, men heller blir
+	satt i requestcallet etterpå?
