@@ -4,7 +4,6 @@
 
 
 void oc_set_next_floor(int motor_dir, int prev_floor, int* next_floor, int up_vec[], int down_vec[]){
-    // for setting the next floor variable.
 			if(prev_floor == BOTTOM_FLOOR){
 				motor_dir = MOTOR_UP;
 			}

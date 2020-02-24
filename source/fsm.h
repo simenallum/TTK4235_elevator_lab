@@ -13,7 +13,7 @@
 #define BOTTOM_FLOOR 0
 
 /**
-* @brief States for the elevator
+* @brief States for the elevator.
 */
 typedef enum {
 	STILL = 0,
@@ -25,36 +25,36 @@ typedef enum {
 
 
 /**
-* @brief Extern variable for containing current state. 
+* @brief Variable for containing current state. 
 */
-extern STATES current_state;
+STATES m_current_state;
 
 /**
- * @brief Extern variable for containing motor direction.
+ * @brief Variable for containing motor direction.
  */
-extern int motor_dir;
+int m_motor_dir;
 
 
 /**
 * @brief Extern variable for containing previous floor.
 */
-extern int prev_floor;
+extern int g_prev_floor;
 
 
 /**
 * @brief Extern variable for containing next floor
 */
-extern int next_floor;
+extern int g_next_floor;
 
 /**
-* @brief Extern array for containing up orders.
+* @brief Array for containing up orders.
 */
-extern int up_vec[];
+int m_up_vec[];
 
 /**
-* @brief Extern array for containing down orders.
+* @brief Array for containing down orders.
 */
-extern int down_vec[];
+int m_down_vec[];
 
 /**
 * @brief A state machine for initializing the elevator. 
@@ -92,7 +92,7 @@ void fsm_ev_reach_floor(int floor);
 void fsm_ev_obstruction();
 
 /**
-* @brief aA state machine to be calles when the stopbutton is being pressed.
+* @brief A state machine to be calles when the stopbutton is being pressed.
 */
 void fsm_ev_stopButton_pressed();
 

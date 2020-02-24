@@ -35,11 +35,11 @@ int main(){
    
         for (int floor = BOTTOM_FLOOR; floor <= TOP_FLOOR; ++floor){
             if(hardware_read_floor_sensor(floor)){
-                if (floor != prev_floor){
+                if (floor != g_prev_floor){
                     hardware_command_floor_indicator_on(floor);
-                    prev_floor = floor; // Oppdaterer prev_floor når den kjører forbi en etasje.
+                    g_prev_floor = floor;
                 }
-                if(floor == next_floor){
+                if(floor == g_next_floor){
                 	fsm_ev_reach_floor(floor);
                 }
             }
