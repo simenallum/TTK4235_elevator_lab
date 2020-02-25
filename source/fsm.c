@@ -65,7 +65,6 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 		case STILL:
 		{
 			hardware_command_order_light(floor, order_type, 1);
-			// for setting queue.
 			if (floor > g_prev_floor ){
 				if (order_type == HARDWARE_ORDER_DOWN){
 					if ((floor == TOP_FLOOR) && (order_type == HARDWARE_ORDER_DOWN)){
