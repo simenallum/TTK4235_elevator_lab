@@ -122,7 +122,7 @@ void fsm_ev_set_queue(int floor, HardwareOrder order_type){
 				}
 			}
 
-    		oc_set_g_next_floor(m_motor_dir, g_prev_floor, &g_next_floor, m_up_vec, m_down_vec);
+    		oc_set_next_floor(m_motor_dir, g_prev_floor, &g_next_floor, m_up_vec, m_down_vec);
 			break;
 		}
 		case EMERGENCY_AT_FLOOR:
@@ -160,7 +160,7 @@ void fsm_ev_reach_floor(int floor){
 			for (int i = HARDWARE_ORDER_UP; i <= HARDWARE_ORDER_DOWN; i++){
 				hardware_command_order_light(floor, i, 0);
 			}
-			oc_set_g_next_floor(m_motor_dir, g_prev_floor, &g_next_floor, m_up_vec, m_down_vec);
+			oc_set_next_floor(m_motor_dir, g_prev_floor, &g_next_floor, m_up_vec, m_down_vec);
 			m_current_state = DOOR_OPEN;
 			break;
 

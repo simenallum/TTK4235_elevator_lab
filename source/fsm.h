@@ -27,12 +27,12 @@ typedef enum {
 /**
 * @brief Variable for containing current state. 
 */
-STATES m_current_state;
+extern STATES m_current_state;
 
 /**
  * @brief Variable for containing motor direction.
  */
-int m_motor_dir;
+extern int m_motor_dir;
 
 
 /**
@@ -49,12 +49,12 @@ extern int g_next_floor;
 /**
 * @brief Array for containing up orders.
 */
-int m_up_vec[];
+extern int m_up_vec[];
 
 /**
 * @brief Array for containing down orders.
 */
-int m_down_vec[];
+extern int m_down_vec[];
 
 /**
 * @brief A state machine for initializing the elevator. 
