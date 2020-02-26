@@ -10,11 +10,11 @@
 #define BOTTOM_FLOOR 0
 
 /**
- * @brief Sets the @p next_floor variable.
+ * @brief Sets the @p g_next_floor variable.
  * 
  * @param prev_motor_dir previous motor direction.
  * @param prev_floor previous floor. 
- * @param next_floor to be set.
+ * @param next_floor to be set. Is a pointer to the g_next_floor variable.
  * @param up_vec is the array containing upp orders.
  * @param down_vec is the array containing down orders.
  */
@@ -27,7 +27,7 @@ void oc_set_next_floor(
                     );
 
 /**
- * @brief a function for clearing the queue in case of an emergency.
+ * @brief A function for clearing the queue in case of an emergency.
  *
  * @param up_vec is the vector containing upp orders.
  * @param down_vec is the vector for containing down orders.

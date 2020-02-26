@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief State machines called from elevator
+ * @brief State machines called from Elevator
  */
 
 #ifndef FSM_H
@@ -36,13 +36,13 @@ extern int m_motor_dir;
 
 
 /**
-* @brief Extern variable for containing previous floor.
+* @brief Variable for containing previous floor.
 */
 extern int g_prev_floor;
 
 
 /**
-* @brief Extern variable for containing next floor
+* @brief Variable for containing next floor
 */
 extern int g_next_floor;
 
@@ -59,7 +59,7 @@ extern int m_down_vec[];
 /**
 * @brief A state machine for initializing the elevator. 
 *
-* Must be called once before the while-loop main(). 
+* Must be called once before the while-loop in main(). 
 */
 void fsm_init();
 
