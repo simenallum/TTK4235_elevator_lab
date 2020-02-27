@@ -1,11 +1,3 @@
-//
-//  timer.c
-//  HeisXcode
-//
-//  Created by Sigurd Digre on 12/02/2020.
-//  Copyright © 2020 Sigurd Digre. All rights reserved.
-//
-
 #include "timer.h"
 #include "time.h"
 
@@ -22,4 +14,3 @@ int timer_check_timeout() {
     }
     return 0;
 }
-

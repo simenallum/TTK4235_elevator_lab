@@ -1,11 +1,3 @@
-//
-//  timer.h
-//  HeisXcode
-//
-//  Created by Sigurd Digre on 12/02/2020.
-//  Copyright © 2020 Sigurd Digre. All rights reserved.
-//
-
 /**
  * @file
  * @brief Functions and variables for keeping time.
